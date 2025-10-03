@@ -247,7 +247,7 @@ void nu_destroy_program(nu_Program *program) {
 
 static void nu_define_layout(GLuint *VAO, GLuint *VBO, size_t num_components, size_t *component_sizes, size_t *component_counts, GLenum *component_types) {
   // Clear whatever might exist in the VAO and VBO
-  glDeleteVertexArrays(1, VBO);
+  glDeleteBuffers(1, VBO);
   glGenBuffers(1, VBO);
   glBindBuffer(GL_ARRAY_BUFFER, *VBO);
 
@@ -256,13 +256,13 @@ static void nu_define_layout(GLuint *VAO, GLuint *VBO, size_t num_components, si
   glBindVertexArray(*VAO);
 
   // Calculate stride
-  int stride = 0;
-  for (int i = 0; i < num_components; i++) {
+  size_t stride = 0;
+  for (size_t i = 0; i < num_components; i++) {
     stride += component_sizes[i] * component_counts[i];
   }
   // Attrib pointer to each component
-  int offset = 0;
-  for (int i = 0; i < num_components; i++) {
+  size_t offset = 0;
+  for (size_t i = 0; i < num_components; i++) {
     glVertexAttribPointer(i, component_counts[i], component_types[i], GL_FALSE, stride, (GLvoid *)(intptr_t)offset);
     glEnableVertexAttribArray(i);
     offset += component_sizes[i] * component_counts[i];
