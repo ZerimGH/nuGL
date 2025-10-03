@@ -79,7 +79,14 @@ nu_Texture nu_load_texture_array(size_t num_textures, ...);
 void nu_destroy_texture(nu_Texture *texture);
 // Bind a number of textures to slots 0 -> num_textures - 1 (nu_Texture *'s)
 void nu_use_textures(size_t num_textures, ...); 
-// Send an integer value as a uniform to a shader program
+// Single variable uniforms
 void nu_send_uniform_int(int val, nu_Program *program, const char *uniform_name);
+void nu_send_uniform_float(float val, nu_Program *program, const char *uniform_name);
+// Vector uniforms
+void nu_send_uniform_vec2(float *val, nu_Program *program, const char *uniform_name);
+void nu_send_uniform_vec3(float *val, nu_Program *program, const char *uniform_name);
+void nu_send_uniform_vec4(float *val, nu_Program *program, const char *uniform_name);
+// Matrix uniforms
+void nu_send_uniform_mat4(float *val, nu_Program *program, const char *uniform_name);
 
 #endif // nuGL.h

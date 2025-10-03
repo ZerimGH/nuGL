@@ -479,14 +479,73 @@ void nu_use_textures(size_t num_textures, ...) {
 }
 
 void nu_send_uniform_int(int val, nu_Program *program, const char *uniform_name) {
-  if(!program) return;
+  if (!program) return;
   glUseProgram(program->shader_program);
   GLuint uniform_loc = glGetUniformLocation(program->shader_program, uniform_name);
-  if(uniform_loc == -1) {
+  if (uniform_loc == -1) {
     fprintf(stderr, "(nu_send_uniform_int) No uniform \"%s\" found in shader program.\n", uniform_name);
     return;
   }
   glUniform1i(uniform_loc, val); 
   glUseProgram(0);
-  return;
+}
+
+void nu_send_uniform_float(float val, nu_Program *program, const char *uniform_name) {
+  if (!program) return;
+  glUseProgram(program->shader_program);
+  GLuint uniform_loc = glGetUniformLocation(program->shader_program, uniform_name);
+  if (uniform_loc == -1) {
+    fprintf(stderr, "(nu_send_uniform_float) No uniform \"%s\" found in shader program.\n", uniform_name);
+    return;
+  }
+  glUniform1f(uniform_loc, val); 
+  glUseProgram(0);
+}
+
+void nu_send_uniform_vec2(float *val, nu_Program *program, const char *uniform_name) {
+  if (!program || !val) return;
+  glUseProgram(program->shader_program);
+  GLuint uniform_loc = glGetUniformLocation(program->shader_program, uniform_name);
+  if (uniform_loc == -1) {
+    fprintf(stderr, "(nu_send_uniform_vec2) No uniform \"%s\" found in shader program.\n", uniform_name);
+    return;
+  }
+  glUniform2f(uniform_loc, val[0], val[1]); 
+  glUseProgram(0);
+}
+
+void nu_send_uniform_vec3(float *val, nu_Program *program, const char *uniform_name) {
+  if (!program || !val) return;
+  glUseProgram(program->shader_program);
+  GLuint uniform_loc = glGetUniformLocation(program->shader_program, uniform_name);
+  if (uniform_loc == -1) {
+    fprintf(stderr, "(nu_send_uniform_vec3) No uniform \"%s\" found in shader program.\n", uniform_name);
+    return;
+  }
+  glUniform3f(uniform_loc, val[0], val[1], val[2]); 
+  glUseProgram(0);
+}
+
+void nu_send_uniform_vec4(float *val, nu_Program *program, const char *uniform_name) {
+  if (!program || !val) return;
+  glUseProgram(program->shader_program);
+  GLuint uniform_loc = glGetUniformLocation(program->shader_program, uniform_name);
+  if (uniform_loc == -1) {
+    fprintf(stderr, "(nu_send_uniform_vec4) No uniform \"%s\" found in shader program.\n", uniform_name);
+    return;
+  }
+  glUniform4f(uniform_loc, val[0], val[1], val[2], val[3]); 
+  glUseProgram(0);
+}
+
+void nu_send_uniform_mat4(float *val, nu_Program *program, const char *uniform_name) {
+  if (!program || !val) return;
+  glUseProgram(program->shader_program);
+  GLuint uniform_loc = glGetUniformLocation(program->shader_program, uniform_name);
+  if (uniform_loc == -1) {
+    fprintf(stderr, "(nu_send_uniform_mat4) No uniform \"%s\" found in shader program.\n", uniform_name);
+    return;
+  }
+  glUniformMatrix4fv(uniform_loc, 1, GL_FALSE, val); 
+  glUseProgram(0);
 }
