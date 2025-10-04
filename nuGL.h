@@ -88,7 +88,7 @@ void nu_destroy_texture(nu_Texture *texture);
 // Bind a number of textures to slots 0 -> num_textures - 1 (nu_Texture *'s)
 void nu_use_textures(size_t num_textures, ...);
 // Bind a specific texture to a specific slot
-void nu_bind_texture(nu_Texture *texture, size_t slot){
+void nu_bind_texture(nu_Texture *texture, size_t slot);
 // Single variable uniforms
 void nu_send_uniform_int(int val, nu_Program *program,
                          const char *uniform_name);
