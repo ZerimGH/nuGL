@@ -493,6 +493,11 @@ void nu_use_textures(size_t num_textures, ...) {
   va_end(args);
 }
 
+void nu_bind_texture(nu_Texture *texture, size_t slot){
+  glActiveTexture(GL_TEXTURE0 + slot);
+  glBindTexture(texture->type, texture->id);
+}
+
 static bool nu_get_uniform_loc(nu_Program *program, const char *uniform_name,
                                GLuint *res) {
   if (!program)
