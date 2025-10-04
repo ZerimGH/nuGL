@@ -13,8 +13,8 @@
 // Structs
 typedef struct {
   GLFWwindow *window;
-  size_t width;  // Width of window in pixels
-  size_t height; // Height of window in pixels
+  int width;  // Width of window in pixels
+  int height; // Height of window in pixels
   bool active;   // Boolean checking if the window is valid
   // Could add keys and stuff
 } nu_Window;

@@ -74,6 +74,7 @@ void nu_end_frame(nu_Window *window) {
     return;
   glfwSwapBuffers(window->window);
   glfwPollEvents();
+  glfwGetWindowSize(window->window, &window->width, &window->height);
 }
 
 // Read a shader file, and return as a string
