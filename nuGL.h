@@ -41,6 +41,8 @@ typedef struct {
 // Function prototypes
 // Calls glfwTerminate() to free GLFW resources
 void nu_terminate(void);
+// Enables / disables vsync
+void nu_set_vsync(bool state);
 // Returns a window with the given name, width, and height. If fullscreen is
 // true, the window will be fullscreen
 nu_Window nu_create_window(const char *name, size_t width, size_t height,
@@ -75,6 +77,8 @@ void nu_destroy_mesh(nu_Mesh *mesh);
 void nu_send_mesh(nu_Mesh *mesh);
 // Render a mesh
 void nu_render_mesh(nu_Mesh *mesh);
+// Switch the render mode of a mesh
+void nu_set_render_mode(nu_Mesh *mesh, GLenum mode);
 // Load a texture from an image file path
 nu_Texture nu_load_texture(const char *file_loc);
 // Load a texture array from a list of image file paths (char *'s)

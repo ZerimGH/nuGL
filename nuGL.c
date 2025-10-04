@@ -9,6 +9,10 @@ void window_size_callback(GLFWwindow *window, int width, int height) {
   glViewport(0, 0, width, height);
 }
 
+void nu_set_vsync(bool state) {
+  glfwSwapInterval(state);
+}
+
 nu_Window nu_create_window(const char *name, size_t width, size_t height,
                            bool fullscreen) {
   nu_Window res = {NULL, 0, 0, false};
@@ -116,7 +120,7 @@ static GLuint nu_compile_shader(const char *shader_file_location) {
   // Detect the shader type based on file extension
   size_t name_len = strlen(shader_file_location);
   if (name_len < 5) {
-    fprintf(stderr, "(nu_compile_shader): Invalid file name %s\n");
+    fprintf(stderr, "(nu_compile_shader): Invalid file name %s\n", shader_file_location);
   }
   const char *ext = shader_file_location + name_len - 5;
 
@@ -358,6 +362,10 @@ void nu_send_mesh(nu_Mesh *mesh) {
   nu_unbind_mesh();
 }
 
+void nu_set_render_mode(nu_Mesh *mesh, GLenum mode) {
+  mesh->render_mode = mode;
+}
+
 void nu_render_mesh(nu_Mesh *mesh) {
   nu_bind_mesh(mesh);
   glDrawArrays(mesh->render_mode, 0, mesh->bytes_added / mesh->stride);
@@ -371,7 +379,7 @@ nu_Texture nu_load_texture(const char *file_loc) {
 
   int image_width, image_height, comp; // No idea what comp is
   stbi_set_flip_vertically_on_load(1);
-  char *image =
+  unsigned char *image =
       stbi_load(file_loc, &image_width, &image_height, &comp, STBI_rgb_alpha);
 
   if (image == NULL) {
