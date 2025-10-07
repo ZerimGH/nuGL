@@ -308,15 +308,23 @@ void nu_mesh_add_bytes(nu_Mesh *mesh, void *src, size_t n_bytes) {
 
   if (!mesh->data) {
     mesh->bytes_alloced = 1024;
-    mesh->data = malloc(sizeof(uint8_t) * mesh->bytes_alloced);
+    mesh->data = calloc(mesh->bytes_alloced, sizeof(uint8_t));
     mesh->bytes_added = 0;
   }
+
+  size_t og_num = mesh->bytes_added;
 
   if (mesh->bytes_added + n_bytes > mesh->bytes_alloced) {
     while (mesh->bytes_added + n_bytes > mesh->bytes_alloced) {
       mesh->bytes_alloced *= 2;
     }
-    mesh->data = realloc(mesh->data, mesh->bytes_alloced * sizeof(uint8_t));
+    // Safer realloc:
+    void *og = (void *)mesh->data;
+    void *new = calloc(mesh->bytes_alloced, sizeof(uint8_t));
+    memcpy(og, new, og_num);
+    free(og);
+    mesh->data = new;
+    // mesh->data = realloc(mesh->data, mesh->bytes_alloced * sizeof(uint8_t));
   }
 
   memcpy(mesh->data + mesh->bytes_added, src, n_bytes);
